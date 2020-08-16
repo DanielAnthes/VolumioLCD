@@ -15,7 +15,6 @@ class Display:
 
 	def _updateDisplay(self):
 		with self.lock:
-			print("refreshing screen")
 			self.lcd.clear()
 			self.lcd.cursor_pos = (0,0)
 			if len(self.title) > 16:
@@ -27,14 +26,11 @@ class Display:
 			else:
 				artist = self.artist
 			time.sleep(1)
-			print("Writing: " + title + " " + artist)
 			self.lcd.write_string(title + "\n\r" + artist)
 
 	def update(self, title, artist):
-		print("received update: title: " +  title + " artist: " + artist)
 		assert type(self.title) is str, 'malformed title'
 		assert type(self.artist) is str, 'malformed artist'
-		print("updating state")
 		updated = False # only refresh screen if state has changed
 		if not self.title == title:
 			self.title = title
@@ -48,7 +44,6 @@ class Display:
 	def shutdown(self):
 		self.lcd.clear()
 		self.lcd.close(clear=True)
-		# GPIO.cleanup()
 
 if __name__ == '__main__':
 	disp = Display()
